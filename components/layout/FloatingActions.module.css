@@ -1,0 +1,46 @@
+/* The prototype positioned these as two separately-fixed elements at 22px and
+   88px. A flex column keeps them locked together and safe-area aware on iOS. */
+.stack {
+  position: fixed;
+  right: 22px;
+  bottom: max(22px, env(safe-area-inset-bottom));
+  z-index: 800;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fab {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-float);
+  transition: transform var(--dur-fast), box-shadow var(--dur-fast);
+}
+.fab:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.call {
+  background: var(--gold);
+  color: var(--charcoal);
+}
+.call:hover { color: var(--charcoal); }
+
+.whatsapp {
+  background: var(--whatsapp);
+  color: #fff;
+}
+.whatsapp:hover { color: #fff; }
+
+@media (max-width: 560px) {
+  .stack {
+    right: 16px;
+    bottom: max(16px, env(safe-area-inset-bottom));
+  }
+  .fab { width: 52px; height: 52px; }
+}

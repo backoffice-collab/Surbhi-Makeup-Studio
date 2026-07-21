@@ -1,0 +1,133 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh; /* avoids mobile URL-bar clipping the CTAs */
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.bg {
+  object-fit: cover;
+  object-position: center 22%;
+  z-index: -2;
+}
+
+/* The prototype's left-to-right ink gradient, unchanged in value. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    rgba(var(--overlay-ink), 0.72) 0%,
+    rgba(var(--overlay-ink), 0.32) 55%,
+    rgba(var(--overlay-ink), 0.12) 100%
+  );
+}
+
+.inner {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  width: 100%;
+  padding: 120px var(--gutter) 90px;
+}
+
+.content {
+  max-width: 620px;
+  color: #fff;
+}
+
+.eyebrow {
+  color: var(--gold);
+  margin-bottom: 26px;
+}
+
+.title {
+  font-size: var(--fs-hero);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: var(--lh-tight);
+  color: #fff;
+  text-wrap: balance;
+}
+
+.accent {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.lead {
+  margin-top: 26px;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-body);
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 500px;
+  font-weight: 400;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 38px;
+}
+
+/* ---- Scroll cue ---- */
+.scroll {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.65);
+  animation: floatY 2.4s ease-in-out infinite;
+}
+
+.scrollLabel {
+  font-size: 0.625rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 38px;
+  background: linear-gradient(var(--gold), transparent);
+}
+
+/* ---- Breakpoints ---- */
+@media (max-width: 980px) {
+  .inner { padding: 110px var(--gutter-md) 80px; }
+  .content { max-width: 560px; }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    /* Slightly shorter than full-height so the section below peeks in and
+       signals scrollability. */
+    min-height: 92svh;
+  }
+  .inner { padding: 100px var(--gutter-sm) 84px; }
+  .bg { object-position: center 18%; }
+  .lead { margin-top: 20px; font-size: 1rem; }
+  /* At 0.32em tracking the eyebrow wrapped to two ragged lines; tightening
+     it and dropping the leading rule keeps it on one. */
+  .eyebrow {
+    letter-spacing: 0.2em;
+    font-size: 0.6875rem;
+    margin-bottom: 20px;
+  }
+  .eyebrow::before { display: none; }
+  .actions {
+    margin-top: 30px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  /* The cue collides with stacked full-width CTAs on small screens. */
+  .scroll { display: none; }
+}

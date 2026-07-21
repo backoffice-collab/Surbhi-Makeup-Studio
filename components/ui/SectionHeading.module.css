@@ -1,0 +1,23 @@
+.wrap { margin-bottom: 60px; }
+.center { text-align: center; margin-inline: auto; }
+.narrow { max-width: 640px; }
+
+.title {
+  font-size: var(--fs-section);
+  text-wrap: balance;
+  margin: 0;
+}
+.onDark { color: #fff; }
+
+.body {
+  margin-top: 18px;
+  color: var(--text-muted);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: 400;
+}
+.bodyDark { color: rgba(255, 255, 255, 0.72); }
+
+@media (max-width: 560px) {
+  .wrap { margin-bottom: 44px; }
+}

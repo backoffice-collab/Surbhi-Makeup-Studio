@@ -1,0 +1,264 @@
+@import './tokens.css';
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 450;
+  color: var(--text);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  margin: 0;
+  line-height: var(--lh-head);
+}
+
+p { margin: 0; }
+
+a {
+  color: var(--rose);
+  text-decoration: none;
+  transition: color var(--dur-fast);
+}
+a:hover { color: var(--gold); }
+
+img { display: block; max-width: 100%; }
+
+/* A class with an explicit `display` outranks the `hidden` attribute's UA
+   style, which silently leaves "hidden" elements in the a11y tree. */
+[hidden] { display: none !important; }
+
+input, textarea, select, button { font-family: inherit; }
+
+::selection { background: var(--gold); color: var(--white); }
+
+/* Keyboard focus — absent from the prototype entirely. Visible for keyboard
+   users, invisible for mouse users. */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: var(--r-sharp);
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1100;
+  background: var(--charcoal);
+  color: var(--white);
+  padding: 14px 22px;
+  font-size: 0.875rem;
+  letter-spacing: var(--tracking-btn);
+}
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
+  color: var(--white);
+}
+
+/* ==========================================================================
+   Layout primitives
+   ========================================================================== */
+
+.section {
+  padding: var(--section-y) var(--gutter);
+  scroll-margin-top: var(--header-h);
+}
+.section--tight { padding-block: 90px; }
+
+.shell {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  width: 100%;
+}
+.shell--narrow { max-width: var(--maxw-narrow); }
+.shell--prose  { max-width: var(--maxw-prose); }
+
+.bg-ivory    { background: var(--ivory); }
+.bg-charcoal { background: var(--charcoal); color: var(--white); }
+
+/* ==========================================================================
+   Type helpers
+   ========================================================================== */
+
+.eyebrow {
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 16px;
+}
+.eyebrow--gold { color: var(--gold); }
+.eyebrow--rule {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.eyebrow--rule::before {
+  content: '';
+  width: 34px;
+  height: 1px;
+  background: currentColor;
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-body);
+  font-weight: 400;
+}
+
+/* ==========================================================================
+   Buttons — three variants, replacing ~40 inline style blocks
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  letter-spacing: var(--tracking-btn);
+  padding: 16px 34px;
+  border-radius: var(--r-sharp);
+  text-align: center;
+  transition: background var(--dur-fast), color var(--dur-fast),
+              transform var(--dur-fast), box-shadow var(--dur-fast);
+  /* 48px min tap target on touch devices (WCAG 2.5.5) */
+  min-height: 48px;
+}
+
+.btn--gold {
+  background: var(--gold);
+  color: var(--charcoal);
+  font-weight: 600;
+}
+.btn--gold:hover {
+  background: var(--gold-deep);
+  color: var(--charcoal);
+}
+
+.btn--ghost {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+  backdrop-filter: blur(6px);
+}
+.btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--white);
+}
+
+.btn--dark {
+  background: var(--charcoal);
+  color: var(--white);
+  font-weight: 500;
+  padding: 13px 24px;
+}
+.btn--dark:hover { background: #1a1a1a; color: var(--white); }
+
+/* Text link with the gold underline rule */
+.btn-text {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--charcoal);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  border-bottom: 1.5px solid var(--gold);
+  padding-bottom: 5px;
+  transition: color var(--dur-fast);
+}
+.btn-text:hover { color: var(--gold); }
+
+@media (pointer: coarse) {
+  .btn-text { padding-block: 10px 8px; }
+}
+
+/* ==========================================================================
+   Touch targets
+
+   On touch devices every link/button gets a >=44px hit area (WCAG 2.5.5).
+   Scoped to `pointer: coarse` so desktop spacing and density are unchanged —
+   the padding grows the hit box, not the visual box.
+   ========================================================================== */
+
+@media (pointer: coarse) {
+  /* Grow the padding box itself so the target is genuinely tappable. Applied
+     to inline text links in lists/footers, which were 20px tall. Container
+     gaps are reduced alongside this so vertical rhythm stays close to the
+     desktop design. */
+  .tap-target {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+/* ==========================================================================
+   Reveal animation — respects reduced-motion
+   ========================================================================== */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(9px); }
+}
+
+.reveal { animation: fadeUp 0.8s var(--ease) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Responsive — real breakpoints, no !important overrides on data-attributes
+   ========================================================================== */
+
+@media (max-width: 980px) {
+  .section {
+    padding-inline: var(--gutter-md);
+    padding-block: var(--section-y-md);
+  }
+}
+
+@media (max-width: 560px) {
+  .section {
+    padding-inline: var(--gutter-sm);
+    padding-block: var(--section-y-sm);
+  }
+  .btn { width: 100%; }
+}

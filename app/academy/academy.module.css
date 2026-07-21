@@ -1,0 +1,176 @@
+.blockTitle { font-size: var(--fs-block); text-wrap: balance; }
+.smallTitle { font-size: clamp(1.625rem, 3.2vw, 2.5rem); text-wrap: balance; }
+.blockBody {
+  margin-top: 18px;
+  color: var(--text-muted);
+  font-size: var(--fs-body);
+  line-height: var(--lh-loose);
+  font-weight: 400;
+}
+.cover { object-fit: cover; }
+.spark { color: var(--gold); flex: none; }
+
+/* ---- Why join ---- */
+.whyGrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+}
+.why { text-align: center; padding: 14px; }
+.whyNo {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 2.5rem;
+  color: var(--gold);
+}
+.whyTitle { font-size: 1.25rem; margin-top: 12px; }
+.whyDesc {
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+/* ---- Courses ---- */
+.courseGrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.course {
+  background: #fff;
+  border-radius: var(--r-soft);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+.courseBar {
+  display: block;
+  height: 6px;
+  background: linear-gradient(90deg, var(--gold), var(--rose));
+}
+.courseBody {
+  padding: 38px 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.duration {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rose);
+}
+.courseTitle { font-size: 1.5rem; margin-top: 12px; }
+.courseDesc {
+  margin-top: 14px;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-body);
+  font-weight: 400;
+  flex: 1;
+}
+.points {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 20px 0 0;
+  border-top: 1px solid #f0ebe4;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.point {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.84375rem;
+  color: var(--text-subtle);
+}
+
+/* ---- Practical training ---- */
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.twoColTop {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+.trainList {
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.trainItem {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 0.9375rem;
+  color: #444;
+}
+.trainImg {
+  position: relative;
+  border-radius: var(--r-soft);
+  overflow: hidden;
+  aspect-ratio: 5 / 6;
+}
+
+/* ---- Admission steps ---- */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.step { text-align: center; }
+.stepNo {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--gold);
+}
+.stepTitle { font-size: 1.125rem; margin-top: 16px; color: #fff; }
+.stepDesc {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.84375rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* ---- Breakpoints ---- */
+@media (max-width: 980px) {
+  .courseGrid { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
+  .twoCol, .twoColTop { grid-template-columns: 1fr; gap: 44px; }
+  .trainImg { max-width: 460px; margin-inline: auto; width: 100%; }
+  .steps { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+}
+
+@media (max-width: 560px) {
+  .courseBody { padding: 30px 24px; }
+  .steps { grid-template-columns: 1fr; }
+}
