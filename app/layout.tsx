@@ -4,7 +4,12 @@ import { site } from '@/lib/site'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import FloatingActions from '@/components/layout/FloatingActions'
+import dynamic from 'next/dynamic'
 import './globals.css'
+
+// Lazy-loaded: the chat widget isn't needed for first paint, so it stays out
+// of the initial bundle and loads after the page is interactive.
+const Chatbot = dynamic(() => import('@/components/chat/Chatbot'))
 
 /* Self-hosted at build time — no runtime request to Google, no CLS. */
 const playfair = Playfair_Display({
@@ -121,6 +126,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <Footer />
         <FloatingActions />
+        <Chatbot />
       </body>
     </html>
   )
