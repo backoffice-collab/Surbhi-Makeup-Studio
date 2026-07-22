@@ -75,7 +75,7 @@ export function ruleBasedReply(message: string): string {
     return `We're at ${site.address.street}, ${site.address.locality}, ${site.address.region} ${site.address.postalCode}. ${site.hours}. You'll find a map on our Contact page.`
   }
   if (has('time', 'hour', 'open', 'timing', 'close')) {
-    return `We're open ${site.hours}. Feel free to call ${site.phoneDisplay} before visiting so we can give you our full attention.`
+    return `We're ${site.hours.toLowerCase()}. Feel free to call ${site.phoneDisplay} before visiting so we can give you our full attention.`
   }
   if (has('bridal', 'wedding', 'dulhan', 'shaadi')) {
     return `Bridal is the heart of our studio — bespoke HD and airbrush looks tailored to your outfit, features and venue, designed to last all day. We'd love to plan yours; message us on WhatsApp at ${site.whatsappDisplay} to start.`
