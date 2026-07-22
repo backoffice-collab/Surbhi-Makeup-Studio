@@ -43,6 +43,7 @@ export const navItems = [
   { label: 'Services', href: '/services' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Academy', href: '/academy' },
+  { label: 'AI Advisor', href: '/beauty-advisor' },
   { label: 'Testimonials', href: '/testimonials' },
   { label: 'FAQs', href: '/faq' },
   { label: 'Contact', href: '/contact' },
