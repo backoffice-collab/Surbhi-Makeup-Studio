@@ -11,6 +11,33 @@ npm run dev      # http://localhost:3000
 
 Requires Node.js 18.18+ (LTS recommended).
 
+## Environment
+
+Copy `.env.example` to `.env.local` and fill in. All keys are optional — the
+site runs fully without them, degrading gracefully.
+
+| Variable | Purpose | If unset |
+|---|---|---|
+| `SUPABASE_URL` | Supabase project URL | Contact form still works via WhatsApp; leads aren't saved |
+| `SUPABASE_PUBLISHABLE_KEY` | Supabase publishable key (`sb_publishable_…`) | as above |
+| `GEMINI_API_KEY` | Gemini Vision for the Beauty Advisor | Falls back to on-device analysis |
+
+### Supabase (contact / booking enquiries)
+
+Enquiries submitted through the contact form are saved to a Supabase table,
+then the visitor is handed off to WhatsApp — so a lead is captured even if
+they never press send.
+
+**Setup:** in the Supabase dashboard → SQL Editor, run the migration in
+`supabase/migrations/0001_enquiries.sql`.
+
+**Security model.** The browser never talks to Supabase directly — it POSTs to
+`/api/enquiry`, which validates input and inserts server-side. The publishable
+key is public by design; protection comes from Row Level Security: the policy
+allows the public to **insert only**, never to read, update or delete. Read
+enquiries in the dashboard's Table Editor. **Do not add a public SELECT policy
+and do not use the secret key here** — either would undo the protection.
+
 ## Structure
 
 ```

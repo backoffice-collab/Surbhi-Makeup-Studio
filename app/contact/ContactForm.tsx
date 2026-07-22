@@ -17,9 +17,13 @@ type Errors = Partial<Record<'name' | 'phone', string>>
  * The prototype's form had no <form>, no labels, no validation and a submit
  * handler that only fired an alert() — every enquiry was silently lost.
  *
- * This composes the enquiry into a WhatsApp message and opens the chat. It
- * works with no backend and lands where this studio already takes bookings.
- * To switch to email later, replace handleSubmit with a POST to an API route.
+ * On submit it now does two things:
+ *   1. POSTs to /api/enquiry, which stores the lead in Supabase (server-side,
+ *      so no database key is exposed to the browser). This is best-effort —
+ *      if the DB isn't configured or the request fails, submission continues.
+ *   2. Opens WhatsApp with the details pre-filled, where the studio already
+ *      takes bookings.
+ * So the lead is captured even if the visitor never presses send in WhatsApp.
  */
 export default function ContactForm() {
   const [values, setValues] = useState({
@@ -27,14 +31,17 @@ export default function ContactForm() {
     phone: '',
     interest: '' as string,
     message: '',
+    // Honeypot — hidden from real users; bots fill it and get silently dropped.
+    company: '',
   })
   const [errors, setErrors] = useState<Errors>({})
+  const [submitting, setSubmitting] = useState(false)
 
   const set = (k: keyof typeof values) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     setValues((v) => ({ ...v, [k]: e.target.value }))
-    setErrors((s) => ({ ...s, [k]: undefined }))
+    if (k === 'name' || k === 'phone') setErrors((s) => ({ ...s, [k]: undefined }))
   }
 
   const validate = (): boolean => {
@@ -48,10 +55,31 @@ export default function ContactForm() {
     return Object.keys(next).length === 0
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!validate()) return
+    if (!validate() || submitting) return
 
+    setSubmitting(true)
+
+    // 1. Persist the lead. Best-effort: never block the user on it.
+    try {
+      await fetch('/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: values.name.trim(),
+          phone: values.phone.trim(),
+          interest: values.interest || undefined,
+          message: values.message.trim() || undefined,
+          company: values.company, // honeypot
+          source: 'contact-form',
+        }),
+      })
+    } catch {
+      // Network error — fall through to WhatsApp anyway.
+    }
+
+    // 2. Open WhatsApp with the enquiry pre-filled.
     const lines = [
       `Hello Surbhi Makeup Studio, I'd like to enquire.`,
       ``,
@@ -66,6 +94,8 @@ export default function ContactForm() {
       '_blank',
       'noopener',
     )
+
+    setSubmitting(false)
   }
 
   return (
@@ -143,7 +173,24 @@ export default function ContactForm() {
         />
       </div>
 
-      <button type="submit" className="btn btn--dark">Send Enquiry</button>
+      {/* Honeypot: visually and programmatically hidden from real users.
+          Bots that auto-fill every field trip it and are silently dropped. */}
+      <div className={styles.honeypot} aria-hidden="true">
+        <label htmlFor="company">Company (leave blank)</label>
+        <input
+          id="company"
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={values.company}
+          onChange={set('company')}
+        />
+      </div>
+
+      <button type="submit" className="btn btn--dark" disabled={submitting}>
+        {submitting ? 'Sending…' : 'Send Enquiry'}
+      </button>
       <p className={styles.hint}>
         Opens WhatsApp with your details filled in, so you can send in one tap.
       </p>
