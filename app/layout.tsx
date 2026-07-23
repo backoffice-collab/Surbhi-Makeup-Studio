@@ -4,6 +4,7 @@ import { site } from '@/lib/site'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import FloatingActions from '@/components/layout/FloatingActions'
+import WelcomeModal from '@/components/ui/WelcomeModal'
 import dynamic from 'next/dynamic'
 import './globals.css'
 
@@ -127,6 +128,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <FloatingActions />
         <Chatbot />
+        <WelcomeModal clientName="Surbhi" />
       </body>
     </html>
   )

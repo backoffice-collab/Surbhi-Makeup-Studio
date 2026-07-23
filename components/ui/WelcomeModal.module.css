@@ -1,0 +1,131 @@
+/* Gold accent for this modal, per spec (#C8A14B). */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(12, 9, 7, 0.62);
+  /* Blurs the page behind the modal — the "background page blur" requirement. */
+  backdrop-filter: blur(14px) saturate(1.05);
+  -webkit-backdrop-filter: blur(14px) saturate(1.05);
+}
+
+.card {
+  --wm-gold: #c8a14b;
+  position: relative;
+  width: min(560px, 100%);
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
+  padding: clamp(32px, 6vw, 56px);
+  text-align: center;
+  border-radius: 22px;
+  /* Glassmorphism */
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.10),
+    rgba(255, 255, 255, 0.04)
+  );
+  border: 1px solid rgba(200, 161, 75, 0.32);
+  box-shadow:
+    0 30px 80px -30px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  color: #f4efe7;
+}
+
+.divider {
+  display: block;
+  width: 54px;
+  height: 2px;
+  margin: 0 auto 22px;
+  background: linear-gradient(90deg, transparent, var(--wm-gold), transparent);
+}
+
+.label {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--wm-gold);
+  margin: 0 0 18px;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 5vw, 2.75rem);
+  line-height: 1.12;
+  color: #fff;
+  margin: 0 0 24px;
+}
+.name {
+  font-style: italic;
+  color: var(--wm-gold);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 42ch;
+  margin: 0 auto 32px;
+}
+.body p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.72;
+  color: rgba(244, 239, 231, 0.82);
+  font-weight: 400;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 15px 40px;
+  border: none;
+  cursor: pointer;
+  border-radius: 9999px;
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  letter-spacing: 0.04em;
+  color: #14100a;
+  background: linear-gradient(135deg, #e0c176, #c8a14b 55%, #a8842f);
+  box-shadow: 0 12px 30px -10px rgba(200, 161, 75, 0.55);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.cta:hover {
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 0 18px 40px -12px rgba(200, 161, 75, 0.7);
+  filter: brightness(1.04);
+}
+.cta:active {
+  transform: scale(0.99);
+}
+.cta:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.fine {
+  margin: 22px 0 0;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: rgba(244, 239, 231, 0.5);
+}
+
+@media (max-width: 560px) {
+  .overlay { padding: 16px; }
+  .card { border-radius: 18px; }
+  .cta { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay, .card { backdrop-filter: blur(14px); }
+}
