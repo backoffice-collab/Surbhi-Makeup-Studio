@@ -27,7 +27,7 @@ export default function AboutPage() {
           <div className={styles.portrait}>
             <Image
               src="/images/founder-image.jpg"
-              alt="Surbhi — founder, professional makeup artist and educator"
+              alt="Surbhi, founder and lead makeup artist, applying bridal makeup to a client"
               fill
               sizes="(max-width: 980px) 100vw, 45vw"
               className={styles.portraitImg}
